@@ -29,6 +29,6 @@ def generate_launch_description():
                 ('pose_topic',  pose_topic),
                 ('twist_topic', twist_topic),
             ],
-            prefix='xterm -e gdb -q -ex run --args python3', # gdb debugging
+            # prefix='xterm -e gdb -q -ex run --args python3', # gdb debugging
         )
     ])
