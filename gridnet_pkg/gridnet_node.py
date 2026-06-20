@@ -63,12 +63,6 @@ class GridNetNode(Node):
         self.ego_twist = np.array([[lin.x, lin.y, lin.z, ang.x, ang.y, ang.z]])
 
     def pc_cb_(self, msg): 
-        """ 
-        TODO: It would be cleaner to initialize the sequence to the initially received scan once obtained, 
-              as opposed to keeping it as zero until at least 3 scans are received. Might not matter in practice though. 
-
-        TODO: Hardcoded sliding window only works for seq_len = 3. Fix this using torch.roll or a similar method. 
-        """
         with torch.no_grad():
             if self.ego_pose is not None and self.ego_twist is not None: 
                 start_time = self.get_clock().now().nanoseconds 
@@ -221,10 +215,12 @@ def main(args=None):
     print('Running GridNet Node.')
 
     rclpy.init(args=args)
-    gridnet_node = GridNetNode() 
-    rclpy.spin(gridnet_node) 
+
+    gridnet_node = GridNetNode()
+    rclpy.spin(gridnet_node)
     gridnet_node.destroy_node()
     rclpy.shutdown()     
+
 
 
 if __name__ == '__main__':
